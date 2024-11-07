@@ -1,0 +1,8 @@
+site_name: Yuzu Inventory System
+nav:
+  - Home: index.md
+  - Features: features.md
+  - Installation: installation.md
+  - Usage:
+    - Basic Usage: scripting.md
+theme: material
