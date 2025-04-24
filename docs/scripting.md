@@ -20,14 +20,14 @@ To use, simply get a reference to the inventory object.
 
 After that, call the `AssignInventory()` method to assign an inventory backend to display.
 ## Adding a Controller
-The demo 'Collector' class:
+The `InventoryController` Class:
 ```cs
 using InventorySystem;
 using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Inventory))]
-public class Collector : MonoBehaviour
+public class InventoryController : MonoBehaviour
 {
     private Inventory inventory;
     [SerializeField] private UI_Inventory uiInventory;
@@ -43,12 +43,6 @@ public class Collector : MonoBehaviour
     {
         inventory.AddItem(data, 1);
         OnItemCollected?.Invoke(data);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        ICollectible collectible = collision.GetComponent<ICollectible>();
-        collectible?.Collect(this);
     }
 }
 ```
