@@ -15,11 +15,21 @@ To use, simply get a reference to the inventory object.
 ### Events
 - `OnItemAdded`
 - `OnItemRemoved`
+- `OnItemUsed`
+
+Each event will pass in the `InventorySlot` object, which contains info about stack size, item data, custom behaviour objects.
+
+Since `InventorySlot` objects are passed by reference. Changing the object will directly modify the actual inventory
+
 ## UI 
 ![alt text](image.png "Built in UI Hierachy")
 
-After that, call the `AssignInventory()` method to assign an inventory backend to display.
 ## Adding a Controller
+The Inventory Controller helps bridge the gap between Inventory Model and UI  
+A single inventory can have multiple UI objects showing the inventory  
+Items added to inventory can be controlled
+- Possible to add filters so that inventory only accept some items
+
 The `InventoryController` Class:
 ```cs
 using InventorySystem;
