@@ -5,4 +5,5 @@ nav:
   - Installation: installation.md
   - Usage:
     - Basic Usage: scripting.md
+    - Item Interaction: item-interaction.md
 theme: material

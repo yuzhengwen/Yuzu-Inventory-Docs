@@ -9,10 +9,8 @@
       
       
       
-        <link rel="prev" href="../features/">
+        <link rel="prev" href="../scripting/">
       
-      
-        <link rel="next" href="../scripting/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +18,7 @@
     
     
       
-        <title>Installation - Yuzu Inventory System</title>
+        <title>Item Interaction - Yuzu Inventory System</title>
       
     
     
@@ -62,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#instructions-to-add-package-to-unity-project" class="md-skip">
+        <a href="#adding-item-interaction" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Installation
+              Item Interaction
             
           </span>
         </div>
@@ -235,19 +233,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
         
   
   
@@ -258,7 +247,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -267,18 +255,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -294,7 +284,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Usage
@@ -328,10 +318,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../item-interaction/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Item Interaction
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -342,6 +354,44 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#built-in-class-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      Built In Class Method
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linking-from-external-script-using-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linking From External Script Using Events
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -374,6 +424,32 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#built-in-class-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      Built In Class Method
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linking-from-external-script-using-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linking From External Script Using Events
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -388,16 +464,77 @@
 
 
 
-<h1 id="instructions-to-add-package-to-unity-project">Instructions to Add Package to Unity Project</h1>
+<h1 id="adding-item-interaction">Adding Item Interaction</h1>
+<h2 id="built-in-class-method">Built In Class Method</h2>
+<p>Let's say we want a health potion item. When used, it will restore health for the player.
+There is a built-in system for creating custom types for custom item functionality. Currently this supports item usage. In future, this may be extended to allow for item objects to receive update ticks, allow equiping etc.  </p>
+<p>First we create our custom HealthPotion script:</p>
+<pre><code class="language-cs">public class HealthPotionItem : BaseInventoryItem, IUseable
+{
+    private Inventory inv;
+    private Player player;
+    public HealthPotionItem(GameObject owner) : base(owner)
+    {
+        inv = owner.GetComponent&lt;Inventory&gt;();
+        player = owner.GetComponent&lt;Player&gt;();
+    }
+
+    public void Use(InventorySlot slot)
+    {
+        inv.RemoveFromSlot(slot, 1);
+        player.RestoreHealth(50);
+    }
+}
+</code></pre>
+<p>Here are some things to take note of:  </p>
 <ul>
-<li>In Unity, go to Windows-&gt;Package Manager</li>
-<li>Click the '+' button on the top left</li>
-<li>Select "Add Package from Git URL"</li>
-<li>Copy and Paste in <code>https://github.com/yuzhengwen/inventory-system-unity.git</code></li>
-<li>Click "Add"</li>
-<li>Choose Files to Import</li>
-<li>Done!</li>
+<li>For this behaviour to be recognised, it must extend from <code>BaseInventoryItem</code></li>
+<li>The <code>IUseable</code> interface adds the <code>Use()</code> method, which is called when user presses the 'Use' key while this item is selected</li>
+<li>The <code>owner</code> Game Object is passed as an argument in the constructor. This is called at runtime and provides the owner of the inventory holding the item</li>
+<li>It is good practice to get the references once in the inventory, and simply used the cached values in the <code>Use()</code> method</li>
 </ul>
+<p>Next, go to the Item Scriptable Object, and select this <code>HealthPotionItem</code> type in the custom behaviour type dropdown.</p>
+<p>And that's it! How simple is that :D</p>
+<h2 id="linking-from-external-script-using-events">Linking From External Script Using Events</h2>
+<p>Let's say we have a dagger item. We want to throw a dagger projectile and decrease stack size by 1 when used  </p>
+<p>First we create a <code>WeaponThrower.cs</code> script.</p>
+<pre><code class="language-cs">[SerializeField] private Inventory inv;
+
+private void OnEnable()
+{
+    inv.OnItemUsed += ThrowWeaponFromInv;
+}
+
+private void OnDisable()
+{
+    inv.OnItemUsed -= ThrowWeaponFromInv;
+}
+</code></pre>
+<p>Here we do 2 things:</p>
+<ol>
+<li>Get a reference to our inventory data model</li>
+<li>Subscribe to the <code>OnItemUsed</code> event</li>
+</ol>
+<p>Next, let's handle what actually happens when an item is used.<br />
+We add this method:</p>
+<pre><code class="language-cs">private void ThrowWeaponFromInv(InventorySlot slot)
+{
+    if (slot.itemData.displayName == &quot;Dagger&quot;) {
+        ThrowWeapon(daggerPrefab, UtilScripts.GetVectorToMouse(throwingPoint.position));
+        slot.RemoveFromStack(1);
+    }
+}
+</code></pre>
+<p>Take note that the <code>OnItemUsed</code> event passes the currently selected <code>InventorySlot</code> object as an argument.<br />
+Let's see how the logic is handled:</p>
+<ol>
+<li>First we check if the used item is the item we are looking for</li>
+<li>We call the <code>ThrowWeapon</code> function, which I will not show here, but it will instantiate a prefab in the direction given</li>
+<li>Lastly, it reduces stack count by 1</li>
+</ol>
+<blockquote>
+<p>If we want to consume 5 items, and only want the function to work if the stack size &gt;5, we can do a simple check on the stack size before executing our logic, then call <code>RemoveFromStack(5)</code>.</p>
+</blockquote>
 
 
 
