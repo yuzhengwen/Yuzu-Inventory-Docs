@@ -12,6 +12,8 @@
         <link rel="prev" href="../installation/">
       
       
+        <link rel="next" href="../item-interaction/">
+      
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
@@ -407,6 +409,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../item-interaction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Item Interaction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -526,11 +551,17 @@ To use, simply get a reference to the inventory object.</p>
 <ul>
 <li><code>OnItemAdded</code></li>
 <li><code>OnItemRemoved</code></li>
+<li><code>OnItemUsed</code></li>
 </ul>
+<p>Each event will pass in the <code>InventorySlot</code> object, which contains info about stack size, item data, custom behaviour objects.</p>
+<p>Since <code>InventorySlot</code> objects are passed by reference. Changing the object will directly modify the actual inventory</p>
 <h2 id="ui">UI</h2>
 <p><img alt="alt text" src="../image.png" title="Built in UI Hierachy" /></p>
-<p>After that, call the <code>AssignInventory()</code> method to assign an inventory backend to display.</p>
 <h2 id="adding-a-controller">Adding a Controller</h2>
+<p>The Inventory Controller helps bridge the gap between Inventory Model and UI<br />
+A single inventory can have multiple UI objects showing the inventory<br />
+Items added to inventory can be controlled
+- Possible to add filters so that inventory only accept some items</p>
 <p>The <code>InventoryController</code> Class:</p>
 <pre><code class="language-cs">using InventorySystem;
 using System;
